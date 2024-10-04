@@ -1,0 +1,299 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Classe para registrar informações dos atletas
+class Atleta {
+private:
+    string nomeAtleta;
+    string nacionalidade;
+    float altura;
+    float peso;
+    string dataDeNascimento;
+
+public:
+    // Construtor padrão
+    Atleta(string nome, string nacionalidade, float altura, float peso, string nascimento) {
+        this->nomeAtleta = nome;
+        this->nacionalidade = nacionalidade;
+        this->altura = altura;
+        this->peso = peso;
+        this->dataDeNascimento = nascimento;
+    }
+
+    // Método para exibir informações do atleta
+    void info() {
+        cout << "---------------------------\n";
+        cout << "Nome: " << nomeAtleta << "\n";
+        cout << "Peso: " << peso << " kg\n";
+        cout << "Altura: " << altura << " m\n";
+        cout << "Nacionalidade: " << nacionalidade << "\n";
+        cout << "Data de Nascimento: " << dataDeNascimento << "\n";
+        cout << "---------------------------\n";
+    }
+
+    // Método para buscar um atleta por nome
+    bool buscarPorNome(string nome) {
+        return (this->nomeAtleta == nome);
+    }
+
+    // Método para buscar por nacionalidade
+    bool buscarPorNacionalidade(string nacionalidadeBusca) {
+        return (this->nacionalidade == nacionalidadeBusca);
+    }
+
+    // Método para buscar por altura
+    bool buscarPorAltura(float alturaBusca) {
+        return (this->altura == alturaBusca);
+    }
+
+    // Método para buscar por peso
+    bool buscarPorPeso(float pesoBusca) {
+        return (this->peso == pesoBusca);
+    }
+
+    // Método para buscar por data de nascimento
+    bool buscarPorDataDeNascimento(string dataNascimentoBusca) {
+        return (this->dataDeNascimento == dataNascimentoBusca);
+    }
+};
+
+// Classe para registrar informações dos patrocinadores
+class Patrocinador {
+private:
+    string nomePatrocinador;
+    string setor;
+    string paisSede;
+    float valorInvestido;
+    string inicioContrato;
+    string prazoContrato;
+
+public:
+    // Construtor padrão
+    Patrocinador(string nome, string setor, string pais, float valor, string inicio, string prazo) {
+        this->nomePatrocinador = nome;
+        this->setor = setor;
+        this->paisSede = pais;
+        this->valorInvestido = valor;
+        this->inicioContrato = inicio;
+        this->prazoContrato = prazo;
+    }
+
+    // Método para exibir informações do patrocinador
+    void info() {
+        cout << "---------------------------\n";
+        cout << "Nome do Patrocinador: " << nomePatrocinador << "\n";
+        cout << "Setor: " << setor << "\n";
+        cout << "País Sede: " << paisSede << "\n";
+        cout << "Valor Investido: $" << valorInvestido << "\n";
+        cout << "Início do Contrato: " << inicioContrato << "\n";
+        cout << "Prazo do Contrato: " << prazoContrato << "\n";
+        cout << "---------------------------\n";
+    }
+
+    // Método para buscar patrocinador por nome
+    bool buscarPorNome(string nome) {
+        return (this->nomePatrocinador == nome);
+    }
+
+    // Método para buscar patrocinador por setor
+    bool buscarPorSetor(string setorBusca) {
+        return (this->setor == setorBusca);
+    }
+
+    // Método para buscar patrocinador por país
+    bool buscarPorPaisSede(string paisBusca) {
+        return (this->paisSede == paisBusca);
+    }
+
+    // Método para buscar patrocinador por valor investido
+    bool buscarPorValorInvestido(float valorBusca) {
+        return (this->valorInvestido == valorBusca);
+    }
+};
+
+// Classe para representar um esporte, seus atletas e patrocinadores
+class Esporte {
+private:
+    string nomeEsporte;
+    string atividadeEspecifica;
+    vector<Atleta> atletas;  // Lista de atletas associados ao esporte
+    vector<Patrocinador> patrocinadores;  // Lista de patrocinadores associados ao esporte
+
+public:
+    // Construtor padrão
+    Esporte(string nome, string atividade) {
+        this->nomeEsporte = nome;
+        this->atividadeEspecifica = atividade;
+    }
+
+    // Método para adicionar um atleta ao esporte
+    void adicionarAtleta(Atleta atleta) {
+        atletas.push_back(atleta);
+    }
+
+    // Método para adicionar um patrocinador ao esporte
+    void adicionarPatrocinador(Patrocinador patrocinador) {
+        patrocinadores.push_back(patrocinador);
+    }
+
+    // Método para exibir informações do esporte
+    void info() {
+        cout << "Esporte: " << nomeEsporte << "\n";
+        cout << "Atividade Específica: " << atividadeEspecifica << "\n";
+        cout << "Número de Atletas: " << atletas.size() << "\n";
+        cout << "Número de Patrocinadores: " << patrocinadores.size() << "\n";
+    }
+
+    // Método para buscar atleta por nome dentro do esporte
+    void buscarAtletaPorNome(string nome) {
+        for (Atleta& atleta : atletas) {
+            if (atleta.buscarPorNome(nome)) {
+                cout << "Atleta encontrado no esporte " << nomeEsporte << ":\n";
+                atleta.info();
+                return;
+            }
+        }
+        cout << "Atleta não encontrado no esporte " << nomeEsporte << ".\n";
+    }
+
+    // Método para buscar atletas por nacionalidade
+    void buscarAtletasPorNacionalidade(string nacionalidade) {
+        bool encontrado = false;
+        for (Atleta& atleta : atletas) {
+            if (atleta.buscarPorNacionalidade(nacionalidade)) {
+                encontrado = true;
+                atleta.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum atleta encontrado com a nacionalidade " << nacionalidade << " no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar atletas por altura
+    void buscarAtletasPorAltura(float altura) {
+        bool encontrado = false;
+        for (Atleta& atleta : atletas) {
+            if (atleta.buscarPorAltura(altura)) {
+                encontrado = true;
+                atleta.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum atleta encontrado com a altura " << altura << "m no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar atletas por peso
+    void buscarAtletasPorPeso(float peso) {
+        bool encontrado = false;
+        for (Atleta& atleta : atletas) {
+            if (atleta.buscarPorPeso(peso)) {
+                encontrado = true;
+                atleta.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum atleta encontrado com o peso " << peso << "kg no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar atletas por data de nascimento
+    void buscarAtletasPorDataDeNascimento(string dataNascimento) {
+        bool encontrado = false;
+        for (Atleta& atleta : atletas) {
+            if (atleta.buscarPorDataDeNascimento(dataNascimento)) {
+                encontrado = true;
+                atleta.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum atleta encontrado com a data de nascimento " << dataNascimento << " no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar patrocinadores por nome dentro do esporte
+    void buscarPatrocinadorPorNome(string nome) {
+        for (Patrocinador& patrocinador : patrocinadores) {
+            if (patrocinador.buscarPorNome(nome)) {
+                cout << "Patrocinador encontrado no esporte " << nomeEsporte << ":\n";
+                patrocinador.info();
+                return;
+            }
+        }
+        cout << "Patrocinador não encontrado no esporte " << nomeEsporte << ".\n";
+    }
+
+    // Método para buscar patrocinadores por setor
+    void buscarPatrocinadoresPorSetor(string setor) {
+        bool encontrado = false;
+        for (Patrocinador& patrocinador : patrocinadores) {
+            if (patrocinador.buscarPorSetor(setor)) {
+                encontrado = true;
+                patrocinador.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum patrocinador encontrado no setor " << setor << " no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar patrocinadores por país
+    void buscarPatrocinadoresPorPaisSede(string paisSede) {
+        bool encontrado = false;
+        for (Patrocinador& patrocinador : patrocinadores) {
+            if (patrocinador.buscarPorPaisSede(paisSede)) {
+                encontrado = true;
+                patrocinador.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum patrocinador encontrado com o país sede " << paisSede << " no esporte " << nomeEsporte << ".\n";
+        }
+    }
+
+    // Método para buscar patrocinadores por valor investido
+    void buscarPatrocinadoresPorValorInvestido(float valor) {
+        bool encontrado = false;
+        for (Patrocinador& patrocinador : patrocinadores) {
+            if (patrocinador.buscarPorValorInvestido(valor)) {
+                encontrado = true;
+                patrocinador.info();
+            }
+        }
+        if (!encontrado) {
+            cout << "Nenhum patrocinador encontrado com o valor investido de $" << valor << " no esporte " << nomeEsporte << ".\n";
+        }
+    }
+};
+
+// Exemplo de uso
+int main() {
+    // Criando esporte
+    Esporte futebol("Futebol", "Esporte coletivo");
+
+    // Criando e adicionando atletas
+    Atleta atleta1("Lionel Messi", "Argentina", 1.70, 72.0, "24-06-1987");
+    Atleta atleta2("Cristiano Ronaldo", "Portugal", 1.87, 83.0, "05-02-1985");
+    futebol.adicionarAtleta(atleta1);
+    futebol.adicionarAtleta(atleta2);
+
+    // Criando e adicionando patrocinadores
+    Patrocinador patrocinador1("Adidas", "Artigos Esportivos", "Alemanha", 1000000.0, "01-01-2020", "5 anos");
+    Patrocinador patrocinador2("Nike", "Artigos Esportivos", "EUA", 2000000.0, "01-07-2020", "4 anos");
+    futebol.adicionarPatrocinador(patrocinador1);
+    futebol.adicionarPatrocinador(patrocinador2);
+
+    // Exibindo informações do esporte
+    futebol.info();
+
+    // Buscando atleta por nome
+    futebol.buscarAtletaPorNome("Lionel Messi");
+
+    // Buscando patrocinador por nome
+    futebol.buscarPatrocinadorPorNome("Nike");
+
+    return 0;
+}
